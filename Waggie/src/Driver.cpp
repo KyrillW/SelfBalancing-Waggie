@@ -1,17 +1,20 @@
-#include "../headers/Driver.hpp"
+#include "Driver.hpp"
+#include <Arduino.h>
 
 void Driver::drive(int speed, Direction direction) {
   if (speed > 255) {
-    std::cerr << "Error in Driver::drive(): Speed must be <= 255!\n";
+    Serial.println("Error: Speed must be <= 255");
     return;
   }
 
+  Motor motors[] = {motor_a, motor_b};
   for (Motor currentMotor : motors) {
     int pin = (direction == Direction::FORWARD) ? currentMotor.getForwardPin()
                                                 : currentMotor.getBackwardPin();
 
     analogWrite(pin, speed);
   }
+
   // https://components101.com/sites/default/files/component_datasheet/MX1508-DC-Motor-Driver-Datasheet.pdf
   // -- example (acttime 3000)
   delay(3000);

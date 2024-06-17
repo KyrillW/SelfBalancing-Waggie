@@ -2,11 +2,7 @@
 #define ROBOT_HPP
 
 #include "Driver.hpp"
-#include <string>
-#include <vector>
-
-using std::string;
-using std::vector;
+#include <Arduino.h> // Include for String class when using Arduino platform
 
 /**
  * @class Robot
@@ -17,32 +13,26 @@ using std::vector;
  */
 class Robot {
 private:
-  const string name;
-  const vector<Driver> drivers;
+  const String name;
+  Driver driver_a;
 
 public:
   /**
    * @brief Constructs a new Robot object.
    *
    * @param name The name of the robot.
-   * @param drivers The vector of drivers for the robot.
+   * @param drivers The array of drivers for the robot.
+   * @param count The number of drivers in the array.
    */
-  Robot(const string &name, const vector<Driver> &drivers)
-      : name(name), drivers(drivers){};
+  Robot(const String &name, const Driver & driver_a)
+      : name(name), driver_a(driver_a) {}
 
   /**
    * @brief Gets the name of the robot.
    *
    * @return The name of the robot.
    */
-  string getName() const;
-
-  /**
-   * @brief Gets the drivers of the robot.
-   *
-   * @return The vector of drivers.
-   */
-  vector<Driver> getDrivers() const;
+  String getName() const;
 
   /**
    * @brief Moves the robot forward at a specified speed.
@@ -63,7 +53,7 @@ public:
    *
    * @param message The message the robot should say.
    */
-  void say(string message);
-}
+  void say(const String &message);
+};
 
 #endif // ROBOT_HPP
