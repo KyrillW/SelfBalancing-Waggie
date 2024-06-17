@@ -5,7 +5,8 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-class PosSensor {
+class PosSensor
+{
 private:
   const int ADDRESS = 0x68;
   const int accel_sample_rate = 16384; // for 2g
@@ -13,7 +14,8 @@ private:
   int16_t read_hl_register(int high_address, int low_address);
 
 public:
-  PosSensor() {
+  PosSensor()
+  {
     Wire.begin();
 
     Wire.beginTransmission(this->ADDRESS);
@@ -41,6 +43,9 @@ public:
   int16_t readGY();
   int16_t readGZ();
   Vector readAccel();
+
+  void markTime();
+  double getElapsedSeconds();
 };
 
 #endif // GYRO_HPP
