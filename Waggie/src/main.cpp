@@ -6,16 +6,15 @@
 #include <Arduino.h>
 
 Robot *robot;
-Gyro *gyro;
 void setup() {
   Serial.begin(9600);
 
   // Create motors
   Driver driver1(Motor(10, 5), Motor(6, 9));
 
-  robot = new Robot("BB-8", driver1);
 
-  gyro = new Gyro();
+  PosSensor gyro();
+  robot = new Robot("BB-8", driver1, gyro);
 
   // Robot initialization messages
   robot->say("BRRT BRRT! I am online! BRRT BRRT!");
@@ -23,11 +22,11 @@ void setup() {
 }
 
 void loop() {
-  Vector gyroPos = gyro->read();
 
-  robot->say("My gyro tells me the position is (" + String(gyroPos.getX()) +
-             ", " + String(gyroPos.getY()) + ", " + String(gyroPos.getZ()) +
-             ")");
+  robot->say("My gyro tells me the position is ( pitch: " +
+             String(gyroPos.getPitch()) +
+             ", roll: " + String(gyroPos.getRoll()) +
+             ", yaw: " + String(gyroPos.getYaw()) + ")");
   robot->forward(30);
   delay(2000);
   robot->backward(255);

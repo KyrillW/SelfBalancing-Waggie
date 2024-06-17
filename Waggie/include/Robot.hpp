@@ -2,6 +2,7 @@
 #define ROBOT_HPP
 
 #include "Driver.hpp"
+#include "PosSensor.hpp"
 #include <Arduino.h> // Include for String class when using Arduino platform
 
 /**
@@ -15,7 +16,7 @@ class Robot {
 private:
   const String name;
   Driver driver_a;
-
+  PosSensor pos_sensor;
 public:
   /**
    * @brief Constructs a new Robot object.
@@ -24,8 +25,8 @@ public:
    * @param drivers The array of drivers for the robot.
    * @param count The number of drivers in the array.
    */
-  Robot(const String &name, const Driver & driver_a)
-      : name(name), driver_a(driver_a) {}
+  Robot(const String &name, const Driver & driver_a, const PosSensor & pos_sensor)
+      : name(name), driver_a(driver_a), pos_sensor(pos_sensor) {}
 
   /**
    * @brief Gets the name of the robot.
@@ -54,6 +55,8 @@ public:
    * @param message The message the robot should say.
    */
   void say(const String &message);
+
+  int getAngle
 };
 
 #endif // ROBOT_HPP
