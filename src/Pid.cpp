@@ -1,6 +1,6 @@
 #include "Pid.hpp"
 
-float Pid::getStuuractie(const Robot &robot)
+float Pid::getStuuractie(Robot &robot)
 {
     static float error_sum = 0;
     static float error_prev = 0;

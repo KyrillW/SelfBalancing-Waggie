@@ -17,9 +17,10 @@ class Robot
 private:
   const String name;
   Driver driver_a;
-  PosSensor pos_sensor;
 
 public:
+  PosSensor pos_sensor;
+
   /**
    * @brief Constructs a new Robot object.
    *
@@ -27,7 +28,7 @@ public:
    * @param drivers The array of drivers for the robot.
    * @param count The number of drivers in the array.
    */
-  Robot(const String &name, const Driver &driver_a, const PosSensor &pos_sensor)
+  Robot(const String &name, const Driver &driver_a, PosSensor &pos_sensor)
       : name(name), driver_a(driver_a), pos_sensor(pos_sensor)
   {
     pos_sensor.markTime();

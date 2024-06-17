@@ -12,6 +12,7 @@ private:
   const int accel_sample_rate = 16384; // for 2g
   const float gyro_sensitivity = 65.5; // for 500dps
   int16_t read_hl_register(int high_address, int low_address);
+  double timer;
 
 public:
   PosSensor()

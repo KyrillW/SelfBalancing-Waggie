@@ -21,6 +21,7 @@ void Robot::say(const String &message)
 
 double Robot::getAngle()
 {
+  static double prevAngle = 0;
   Vector accel = pos_sensor.readAccel();
   Vector gyro = pos_sensor.readGyro();
   double elapsedTimeInSeconds = pos_sensor.getElapsedSeconds();
@@ -29,6 +30,7 @@ double Robot::getAngle()
   // might need to find individual gyro offset using a program
   auto accAngle = atan2(accel.getY(), accel.getZ()) * RAD_TO_DEG;      // tilt angle
   auto gyroAngle = gyro.getX() * elapsedTimeInSeconds;                 // angle change
-  auto currentAngle = 0.95 * (prevAngle + gyroRotX) + 0.05 * accAngle; // complementary filter
+  auto currentAngle = 0.95 * (prevAngle + gyroAngle) + 0.05 * accAngle; // complementary filter
+  prevAngle = currentAngle;
   return currentAngle;
 }

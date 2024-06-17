@@ -12,8 +12,8 @@ private:
     float setpoint;
 
 public:
-    Pid(float Kp, float Ki, float Kd, float setpoint) : robot(robot), Kp(Kp), Ki(Ki), Kd(Kd), setpoint(setpoint) {}
-    float getStuuractie(const Robot &robot);
-}
+    Pid(float Kp, float Ki, float Kd, float setpoint) : Kp(Kp), Ki(Ki), Kd(Kd), setpoint(setpoint) {}
+    float getStuuractie(Robot &robot);
+};
 
 #endif // PID_HPP
