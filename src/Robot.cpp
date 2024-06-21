@@ -2,35 +2,25 @@
 
 String Robot::getName() const { return this->name; }
 
-void Robot::forward(int speed)
-{
-  this->say("Let's goooo!");
+void Robot::forward(int speed) {
   driver_a.forward(speed);
 }
 
-void Robot::backward(int speed)
-{
-  this->say("Initiating moonwalk! <beep> <boop>");
+void Robot::backward(int speed) {
   driver_a.backward(speed);
 }
 
-void Robot::say(const String &message)
-{
-  Serial.print(this->getName() + ": " + message + "\n");
-}
-
-double Robot::getAngle()
-{
+double Robot::getAngle() {
   static double prevAngle = 0;
-  Vector accel = pos_sensor.readAccel();
-  Vector gyro = pos_sensor.readGyro();
+  Vector accel = pos_sensor.burstRead(0x3b, 6, accel_sample_rate);
+  Vector gyro = pos_sensor.burstRead(0x43, 6, gyro_sensitivity);
   double elapsedTimeInSeconds = pos_sensor.getElapsedSeconds();
   pos_sensor.markTime();
 
-  // might need to find individual gyro offset using a program
-  auto accAngle = atan2(accel.getY(), accel.getZ()) * RAD_TO_DEG;      // tilt angle
-  auto gyroAngle = gyro.getX() * elapsedTimeInSeconds;                 // angle change
-  auto currentAngle = 0.95 * (prevAngle + gyroAngle) + 0.05 * accAngle; // complementary filter
+  auto accAngle = atan2(accel.getX(), accel.getY()) * RAD_TO_DEG; // tilt angle
+  auto gyroAngle = gyro.getZ() * elapsedTimeInSeconds; // angle change
+  auto currentAngle =
+      0.95 * (prevAngle + gyroAngle) + 0.05 * accAngle; // complementary filter
   prevAngle = currentAngle;
   return currentAngle;
 }

@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 
-
 /**
  * @class Motor
  * @brief Represents a motor with forward and backward control pins.
@@ -13,10 +12,9 @@
  */
 class Motor {
 private:
+public:
   int forward_pin;
   int backward_pin;
-
-public:
   /**
    * @brief Constructs a new Motor object.
    *

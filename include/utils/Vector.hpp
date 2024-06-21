@@ -5,16 +5,16 @@
 #include <Wire.h>
 class Vector {
 private:
-  int16_t x;
-  int16_t y;
-  int16_t z;
+  float x;
+  float y;
+  float z;
 
 public:
-  Vector(int16_t x, int16_t y, int16_t z) : x(x), y(y), z(z){};
+  Vector(float x, float y, float z) : x(x), y(y), z(z){};
 
-  int16_t getX() const { return x; }
-  int16_t getY() const { return y; }
-  int16_t getZ() const { return z; }
+  float getX() const { return x; }
+  float getY() const { return y; }
+  float getZ() const { return z; }
 };
 
 #endif // !VECTOR_HPP

@@ -1,15 +1,14 @@
 #include "Driver.hpp"
-#include "PosSensor.hpp"
 #include "Motor.hpp"
-#include "Robot.hpp"
 #include "Pid.hpp"
+#include "PosSensor.hpp"
+#include "Robot.hpp"
 #include "utils/Vector.hpp"
 #include <Arduino.h>
 
 Robot *robot;
 Pid *pid;
-void setup()
-{
+void setup() {
   Serial.begin(9600);
 
   // Create motors
@@ -18,27 +17,20 @@ void setup()
   PosSensor gyro1 = PosSensor();
   robot = new Robot("BB-8", driver1, gyro1);
 
-  // Robot initialization messages
-  robot->say("BRRT BRRT! I am online! BRRT BRRT!");
-  robot->say("I currently have " + String(1) + " motor drivers!");
-
-  double rot = robot->getAngle();
-  robot->say("I am currently at " + String(rot) + " deg rotation!");
-
-  pid = new Pid(1, 0, 0, 4.0); // zet pid waardes
+  // pid = new Pid(7.5, 30.0, 0.15, -2.6); // zet pid waardes //EZ GAME
+  pid = new Pid(7.5, 37.5, 0.15, -2.4); // Beste waardes
+  // pid = new Pid(7.5, 40.0, 0.15, -2.4);
 }
 
-void loop()
-{
+void loop() {
   float stuuractie = pid->getStuuractie(*robot);
 
-  if (stuuractie > 0)
-  {
-    robot->forward(100);
+  if (stuuractie > 0) {
+    robot->forward(stuuractie);
+  } else {
+    stuuractie *= -1;
+    robot->backward(stuuractie);
   }
-  else
-  {
-    robot->backward(100);
-  }
-  delay(50);
+  
+  delay(15);
 }

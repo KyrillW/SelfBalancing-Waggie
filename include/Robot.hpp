@@ -12,12 +12,12 @@
  * The Robot class contains information about the robot's name and drivers,
  * and provides methods to control the robot's movements and speech.
  */
-class Robot
-{
+class Robot {
 private:
   const String name;
   Driver driver_a;
-
+  const float accel_sample_rate = 16384.0; // for 2g
+  const float gyro_sensitivity = 65.5;     // for 500dps
 public:
   PosSensor pos_sensor;
 
@@ -29,8 +29,7 @@ public:
    * @param count The number of drivers in the array.
    */
   Robot(const String &name, const Driver &driver_a, PosSensor &pos_sensor)
-      : name(name), driver_a(driver_a), pos_sensor(pos_sensor)
-  {
+      : name(name), driver_a(driver_a), pos_sensor(pos_sensor) {
     pos_sensor.markTime();
   }
 
@@ -54,13 +53,6 @@ public:
    * @param speed The speed at which the robot should move backward.
    */
   void backward(const int speed);
-
-  /**
-   * @brief Makes the robot say a specified message.
-   *
-   * @param message The message the robot should say.
-   */
-  void say(const String &message);
 
   double getAngle();
 };
